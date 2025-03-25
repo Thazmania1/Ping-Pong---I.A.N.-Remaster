@@ -17,7 +17,7 @@ public class SceneNavigation : MonoBehaviour
         }
         else if (SceneManager.GetActiveScene().name == "Menu")
         {
-            menuNavigation();
+            // menuNavigation();
         }
         else if (SceneManager.GetActiveScene().name == "Match")
         {
