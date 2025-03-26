@@ -17,7 +17,7 @@ public class SceneNavigation : MonoBehaviour
         }
         else if (SceneManager.GetActiveScene().name == "Menu")
         {
-            // menuNavigation();
+            menuNavigation();
         }
         else if (SceneManager.GetActiveScene().name == "Match")
         {
@@ -25,7 +25,7 @@ public class SceneNavigation : MonoBehaviour
         }
     }
 
-    void titleNavigation()
+    public void titleNavigation()
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
@@ -33,19 +33,20 @@ public class SceneNavigation : MonoBehaviour
         }
     }
 
-    void menuNavigation()
+    public void menuNavigation()
     {
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
             SceneManager.LoadScene("Title");
         }
-        if (Input.GetMouseButtonDown(0))
-        {
-            SceneManager.LoadScene("Match");
-        }
     }
 
-    void matchNavigation()
+    public void startMatch()
+    {
+        SceneManager.LoadScene("Match");
+    }
+
+    public void matchNavigation()
     {
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
