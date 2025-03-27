@@ -14,7 +14,7 @@ public class MatchSetup : MonoBehaviour
     // Determines the amount of rounds.
     private static int rounds = 3;
 
-    // Determines the path where the persistent data will be saved.
+    // Determines the path where the persistent data will be located.
     private string save_path = "";
 
     // Compact persistent data.
@@ -48,8 +48,6 @@ public class MatchSetup : MonoBehaviour
             if (gameObject.name.Contains("Player"))
             {
                 players_ai = loaded_data.players_ai;
-
-                // Applies visual cues.
                 string[] player_text = gameObject.name.Split("_");
                 int player_number = int.Parse(player_text[0].Substring(player_text[0].Length - 1));
                 playerAIVisualCues(player_number, player_text);
