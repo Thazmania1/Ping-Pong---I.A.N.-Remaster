@@ -12,11 +12,6 @@ public class PlayerControls : MonoBehaviour
     void Start()
     {
         player_physics = GetComponent<Rigidbody2D>();
-
-        // Makes players' restrictive colliders not be interactable with the ball.
-        Collider2D player_collider = GetComponent<Collider2D>();
-        Collider2D ball_collider = GameObject.Find("Ball").GetComponent<Collider2D>();
-        // Physics2D.IgnoreCollision(player_collider, ball_collider, true);
     }
 
     void Update()

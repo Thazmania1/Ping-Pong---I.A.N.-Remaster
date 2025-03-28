@@ -39,12 +39,34 @@ public class BallBehaviour : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("I gi in MF");
         // Checks what was triggered.
         if (collision.CompareTag("BallCollision"))
         {
-            // Reverses the horitzontal direction of the ball.
-            x_direction *= -1;
+            // "Whiff" logic.
+            if
+            (
+                collision.transform.parent.name.Equals("Player1") && gameObject.transform.position.x < collision.transform.position.x ||
+                collision.transform.parent.name.Equals("Player2") && gameObject.transform.position.x > collision.transform.position.x
+            )
+            {
+                y_direction *= -1;
+                x_speed++;
+                y_speed++;
+            }
+            else
+            {
+                x_direction *= -1;
+
+                // Top/Bottom hit logic.
+                if
+                (
+                    gameObject.transform.position.y > collision.transform.position.y + 2 ||
+                    gameObject.transform.position.y < collision.transform.position.y - 2
+                )
+                {
+                    y_direction *= -1;
+                }
+            }
         }
         else if (collision.CompareTag("Goal"))
         {
