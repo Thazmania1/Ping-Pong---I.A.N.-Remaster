@@ -17,7 +17,7 @@ public class MatchHandler : MonoBehaviour
     // Determines the path where the persistent data will be located.
     private string save_path = "";
 
-    void Start()
+    void Awake()
     {
         // Applies path in Start since it's not allowed in class level.
         save_path = Path.Combine(Application.persistentDataPath, "matchsetup.dat");
@@ -28,6 +28,9 @@ public class MatchHandler : MonoBehaviour
         MatchSetupData loaded_data = (MatchSetupData)binary_formatter.Deserialize(action);
         players_ai = loaded_data.players_ai;
         rounds = loaded_data.rounds;
+
+        // Closes the file for error prevention.
+        action.Close();
     }
 
     void Update()
@@ -39,7 +42,7 @@ public class MatchHandler : MonoBehaviour
     // Getters.
     public bool getPlayers_ai(int player)
     {
-        return players_ai[player];
+        return players_ai[player - 1];
     }
 
     public int getRounds()

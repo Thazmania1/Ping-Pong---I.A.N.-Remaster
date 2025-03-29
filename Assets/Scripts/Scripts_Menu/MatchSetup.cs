@@ -31,7 +31,7 @@ public class MatchSetup : MonoBehaviour
         }
     }
 
-    void Start()
+    void Awake()
     {
         // Applies path in Start since it's not allowed in class level.
         save_path = Path.Combine(Application.persistentDataPath, "matchsetup.dat");
