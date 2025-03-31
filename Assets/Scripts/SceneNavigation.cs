@@ -46,6 +46,11 @@ public class SceneNavigation : MonoBehaviour
         SceneManager.LoadScene("Match");
     }
 
+    public void endMatch()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
     public void matchNavigation()
     {
         if (Input.GetKeyDown(KeyCode.Backspace))

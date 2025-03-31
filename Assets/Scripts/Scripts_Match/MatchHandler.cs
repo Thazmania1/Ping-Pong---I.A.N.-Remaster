@@ -9,10 +9,10 @@ using static MatchSetup;
 public class MatchHandler : MonoBehaviour
 {
     // Determines which players are AI or "human". [0] = player 1, [1] = player 2.
-    private List<bool> players_ai = new List<bool> { false, true };
+    private List<bool> players_ai;
 
     // Determines the amount of rounds.
-    private int rounds = 3;
+    private int rounds;
 
     // Determines the path where the persistent data will be located.
     private string save_path = "";
@@ -38,6 +38,14 @@ public class MatchHandler : MonoBehaviour
         
     }
 
+    public void updateRemainingRounds()
+    {
+        rounds--;
+        if (rounds == 0)
+        {
+            gameObject.GetComponent<SceneNavigation>().endMatch();
+        }
+    }
 
     // Getters.
     public bool getPlayers_ai(int player)

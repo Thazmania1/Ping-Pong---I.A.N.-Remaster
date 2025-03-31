@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,10 +8,13 @@ public class PlayerControls : MonoBehaviour
     private Rigidbody2D player_physics;
 
     // Defines the player's speed.
-    private float speed = 5f;
+    private float speed = 4f;
 
     // Determines whether the player is AI or "Human".
     private bool ai;
+
+    // Determines the player's score.
+    private int score = 0;
 
     // Reference to the ball object.
     GameObject ball;
@@ -49,5 +53,17 @@ public class PlayerControls : MonoBehaviour
             // Sets the vertical movement velocity.
             player_physics.linearVelocityY = input * speed;
         }
+    }
+
+    public void updateScore()
+    {
+        score++;
+        gameObject.GetComponentInChildren<TextMeshPro>().text = score.ToString();
+    }
+
+    // Getters.
+    public int getScore()
+    {
+        return score;
     }
 }

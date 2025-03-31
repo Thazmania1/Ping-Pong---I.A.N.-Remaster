@@ -780,6 +780,7 @@ GameObject:
   - component: {fileID: 644398688}
   - component: {fileID: 644398687}
   - component: {fileID: 644398691}
+  - component: {fileID: 644398692}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -880,6 +881,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 775b9c714dcdf7545a05a87b9ed78b12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &644398692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644398686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6217a22eaa173bf40831e190f395ed96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1141974968
@@ -1268,6 +1281,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player2_Backpack
       objectReference: {fileID: 0}
+    - target: {fileID: 3790418474578784112, guid: 561c1d80fd05cbb45a043972cab1c2cb, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5595311774205227571, guid: 561c1d80fd05cbb45a043972cab1c2cb, type: 3}
       propertyPath: m_DefaultActionMap
       value: Player2Controls
@@ -1308,6 +1325,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player2
       objectReference: {fileID: 0}
+    - target: {fileID: 6181560198365532912, guid: 561c1d80fd05cbb45a043972cab1c2cb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6181560198365532912, guid: 561c1d80fd05cbb45a043972cab1c2cb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6181560198365532912, guid: 561c1d80fd05cbb45a043972cab1c2cb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6181560198365532912, guid: 561c1d80fd05cbb45a043972cab1c2cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6181560198365532912, guid: 561c1d80fd05cbb45a043972cab1c2cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 7550539052392435250, guid: 561c1d80fd05cbb45a043972cab1c2cb, type: 3}
+      propertyPath: m_Name
+      value: Player2_Score
+      objectReference: {fileID: 0}
     - target: {fileID: 8115875944940536196, guid: 561c1d80fd05cbb45a043972cab1c2cb, type: 3}
       propertyPath: m_Name
       value: Player2_Ball_Collision
@@ -1315,7 +1356,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7550539052392435250, guid: 561c1d80fd05cbb45a043972cab1c2cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 561c1d80fd05cbb45a043972cab1c2cb, type: 3}
 --- !u!1 &1858186088
 GameObject:
@@ -1538,6 +1582,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3790418474578784112, guid: 561c1d80fd05cbb45a043972cab1c2cb, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5772786348653535116, guid: 561c1d80fd05cbb45a043972cab1c2cb, type: 3}
       propertyPath: m_Name
       value: Player1
@@ -1545,7 +1593,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7550539052392435250, guid: 561c1d80fd05cbb45a043972cab1c2cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 561c1d80fd05cbb45a043972cab1c2cb, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

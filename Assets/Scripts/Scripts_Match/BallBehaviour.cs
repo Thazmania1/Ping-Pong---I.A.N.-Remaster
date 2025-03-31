@@ -11,9 +11,14 @@ public class BallBehaviour : MonoBehaviour
     private int x_direction;
     private int y_direction;
 
+    // References the match handler.
+    GameObject match_handler;
+
     void Start()
     {
         ball_physics = GetComponent<Rigidbody2D>();
+
+        match_handler = GameObject.Find("UI");
 
         x_speed = 5f;
         y_speed = 5f;
@@ -37,12 +42,16 @@ public class BallBehaviour : MonoBehaviour
         }
     }
 
+    // Checks what was triggered.
     void OnTriggerEnter2D(Collider2D collision)
     {
-        // Checks what was triggered.
+        // Contains all of the ball's hits logic.
         if (collision.CompareTag("BallCollision"))
         {
-            // "Whiff" logic.
+            // Gets the player's physics for further logic implementation.
+            Rigidbody2D player_physics = collision.GetComponentInParent<Rigidbody2D>();
+
+            // "Whiff" hit.
             if
             (
                 collision.transform.parent.name.Equals("Player1") && gameObject.transform.position.x < collision.transform.position.x ||
@@ -53,29 +62,70 @@ public class BallBehaviour : MonoBehaviour
                 x_speed++;
                 y_speed++;
             }
+
+            // Succesful hit.
             else
             {
                 x_direction *= -1;
-
-                // Top/Bottom hit logic.
+                x_speed += 0.25f;
+                
+                // Regular top/bottom hit.
                 if
                 (
-                    gameObject.transform.position.y > collision.transform.position.y + 2 ||
-                    gameObject.transform.position.y < collision.transform.position.y - 2
+                    y_direction == 1 && gameObject.transform.position.y < collision.transform.position.y - 2 ||
+                    y_direction == -1 && gameObject.transform.position.y > collision.transform.position.y + 2
                 )
                 {
                     y_direction *= -1;
                 }
+
+                // Reverse top/bottom hit. (Yes, this feature was not intentional.)
+                else if
+                (
+                    y_direction == 1 && gameObject.transform.position.y > collision.transform.position.y + 2 ||
+                    y_direction == -1 && gameObject.transform.position.y < collision.transform.position.y - 2
+                )
+                {
+                    y_speed = y_speed <= 5 ? 5 : y_speed - 1;
+                    x_speed = x_speed >= 10 ? 10 : x_speed + 2;
+                }
+
+                // Force transfer logic.
+                if
+                (
+                    y_direction == 1 && player_physics.linearVelocityY > 0 ||
+                    y_direction == -1 && player_physics.linearVelocityY < 0
+                )
+                {
+                    y_speed = y_speed >= 10 ? 10 : y_speed + 1;
+                }
+                else if
+                (
+                    y_direction == 1 && player_physics.linearVelocityY < 0 ||
+                    y_direction == -1 && player_physics.linearVelocityY > 0
+                )
+                {
+                    y_direction *= -1;
+                    y_speed = y_speed <= 5 ? 5 : y_speed - 1;
+                    x_speed = x_speed <= 5 ? 5 : x_speed - 1;
+                }
             }
         }
-        else if (collision.CompareTag("Goal"))
+
+        // Updates the score, resets the ball's position and randomizes its initial physics.
+        if (collision.CompareTag("Goal"))
         {
-            // Resets the ball's position and randomizes its physics.
+            GameObject scoring_player = transform.position.x > 0 ? GameObject.Find("Player1") : GameObject.Find("Player2");
+            scoring_player.GetComponent<PlayerControls>().updateScore();
+
+            match_handler.GetComponent<MatchHandler>().updateRemainingRounds();
+
             transform.position = new Vector3(0, 0, transform.position.z);
             x_speed = 5f;
             y_speed = 5f;
             x_direction = (Random.Range(0, 2) * 2) - 1;
             y_direction = (Random.Range(0, 2) * 2) - 1;
+
         }
     }
 }
