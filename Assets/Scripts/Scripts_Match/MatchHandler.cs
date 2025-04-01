@@ -1,6 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using TMPro;
 using UnityEngine;
 
 // Allows to call MatchSetupData class.
@@ -17,6 +19,9 @@ public class MatchHandler : MonoBehaviour
     // Determines the path where the persistent data will be located.
     private string save_path = "";
 
+    // Variable to store the countdown text reference.
+    TextMeshProUGUI countdown_text;
+
     void Awake()
     {
         // Applies path in Start since it's not allowed in class level.
@@ -31,6 +36,12 @@ public class MatchHandler : MonoBehaviour
 
         // Closes the file for error prevention.
         action.Close();
+
+        // Gets the countdown text component.
+        Transform countdown_object = transform.Find("Countdown_Text");
+        countdown_text = countdown_object.GetComponent<TextMeshProUGUI>();
+
+        StartCoroutine(matchCountdown());
     }
 
     void Update()
@@ -38,6 +49,7 @@ public class MatchHandler : MonoBehaviour
         
     }
 
+    // When there's no more rounds, the game ends.
     public void updateRemainingRounds()
     {
         rounds--;
@@ -46,6 +58,27 @@ public class MatchHandler : MonoBehaviour
             gameObject.GetComponent<SceneNavigation>().endMatch();
         }
     }
+
+    // Time.timeScale is literally the speed of time.
+    public IEnumerator matchCountdown()
+    {
+        countdown_text.color = new Color32(255, 255, 255, 255); // Makes countdown visible.
+        Time.timeScale = 0;
+
+        // 3 Second countdown.
+        float elapsed_time = 0f;
+        int ui_time = 3;
+        while (elapsed_time < 3)
+        {
+            elapsed_time += Time.unscaledDeltaTime; // Tracks real-world time, based on time elapsed every frame.
+            countdown_text.text = (ui_time - (int)elapsed_time).ToString(); // Truncates elapsed time to get a readable number.
+            yield return null; // Waits until next frame.
+        }
+
+        Time.timeScale = 1;
+        countdown_text.color = new Color32(255, 255, 255, 0); // Makes countdown invisible.
+    }
+
 
     // Getters.
     public bool getPlayers_ai(int player)

@@ -112,12 +112,12 @@ public class BallBehaviour : MonoBehaviour
             }
         }
 
-        // Updates the score, resets the ball's position and randomizes its initial physics.
+        // Updates the score, resets every object's position and randomizes its own initial physics.
         if (collision.CompareTag("Goal"))
         {
             GameObject scoring_player = transform.position.x > 0 ? GameObject.Find("Player1") : GameObject.Find("Player2");
-            scoring_player.GetComponent<PlayerControls>().updateScore();
 
+            scoring_player.GetComponent<PlayerControls>().updateScore();
             match_handler.GetComponent<MatchHandler>().updateRemainingRounds();
 
             transform.position = new Vector3(0, 0, transform.position.z);
@@ -126,6 +126,12 @@ public class BallBehaviour : MonoBehaviour
             x_direction = (Random.Range(0, 2) * 2) - 1;
             y_direction = (Random.Range(0, 2) * 2) - 1;
 
+            GameObject player1 = GameObject.Find("Player1");
+            GameObject player2 = GameObject.Find("Player2");
+            player1.transform.position = new Vector3(player1.transform.position.x, 0, player1.transform.position.z);
+            player2.transform.position = new Vector3(player2.transform.position.x, 0, player2.transform.position.z);
+
+            StartCoroutine(match_handler.GetComponent<MatchHandler>().matchCountdown());
         }
     }
 }
