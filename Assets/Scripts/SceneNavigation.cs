@@ -19,10 +19,6 @@ public class SceneNavigation : MonoBehaviour
         {
             menuNavigation();
         }
-        else if (SceneManager.GetActiveScene().name == "Match")
-        {
-            matchNavigation();
-        }
     }
 
     public void titleNavigation()
@@ -49,13 +45,5 @@ public class SceneNavigation : MonoBehaviour
     public void endMatch()
     {
         SceneManager.LoadScene("Menu");
-    }
-
-    public void matchNavigation()
-    {
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            SceneManager.LoadScene("Menu");
-        }
     }
 }
