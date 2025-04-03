@@ -35,9 +35,9 @@ public class BallBehaviour : MonoBehaviour
         ball_physics.linearVelocity = new Vector2(x_speed * x_direction, y_speed * y_direction);
     }
 
+    // Checks what collided.
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Checks what collided.
         if (collision.gameObject.CompareTag("VerticalBorder"))
         {
             // Reverses the vertical direction of the ball.
@@ -54,7 +54,7 @@ public class BallBehaviour : MonoBehaviour
             // Gets the player's physics for further logic implementation.
             Rigidbody2D player_physics = collision.GetComponentInParent<Rigidbody2D>();
 
-            last_hit = collision.name;
+            last_hit = collision.name.Split("_")[0];
 
             // "Whiff" hit.
             if
