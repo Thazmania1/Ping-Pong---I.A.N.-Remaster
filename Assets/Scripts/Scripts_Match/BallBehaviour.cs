@@ -14,6 +14,9 @@ public class BallBehaviour : MonoBehaviour
     // References the match handler.
     GameObject match_handler;
 
+    // Keeps track of the last player that hit the ball.
+    private string last_hit = "";
+
     void Start()
     {
         ball_physics = GetComponent<Rigidbody2D>();
@@ -50,6 +53,8 @@ public class BallBehaviour : MonoBehaviour
         {
             // Gets the player's physics for further logic implementation.
             Rigidbody2D player_physics = collision.GetComponentInParent<Rigidbody2D>();
+
+            last_hit = collision.name;
 
             // "Whiff" hit.
             if
@@ -131,7 +136,15 @@ public class BallBehaviour : MonoBehaviour
             player1.transform.position = new Vector3(player1.transform.position.x, 0, player1.transform.position.z);
             player2.transform.position = new Vector3(player2.transform.position.x, 0, player2.transform.position.z);
 
+            last_hit = "";
+
             StartCoroutine(match_handler.GetComponent<MatchHandler>().matchCountdown());
         }
+    }
+
+    // Getters.
+    public string getLastHit()
+    {
+        return last_hit;
     }
 }

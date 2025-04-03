@@ -30,10 +30,10 @@ public class PauseHandler : MonoBehaviour
     {
         paused = true;
         Time.timeScale = 0;
-        pause_panel_renderer.color = new Color(0, 0, 0, 225);
+        pause_panel_renderer.color = new Color32(0, 0, 0, 230);
         foreach (TextMeshProUGUI pause_text_renderer in pause_text_renderers)
         {
-            pause_text_renderer.color = new Color(255, 255, 255, 255);
+            pause_text_renderer.color = new Color32(255, 255, 255, 255);
         }
     }
     public void resume()
@@ -41,7 +41,7 @@ public class PauseHandler : MonoBehaviour
         if (paused)
         {
             paused = false;
-            pause_panel_renderer.color = new Color(0, 0, 0, 0);
+            pause_panel_renderer.color = new Color32(0, 0, 0, 0);
             foreach (TextMeshProUGUI pause_text_renderer in pause_text_renderers)
             {
                 pause_text_renderer.color = new Color(255, 255, 255, 0);
