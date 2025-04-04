@@ -38,9 +38,9 @@ public class ItemSpawner : MonoBehaviour
     // Unobtained items get destroyed when a goal occurs.
     public void lostItems()
     {
-        foreach (GameObject item in gameObject.transform)
+        foreach (Transform item in gameObject.transform)
         {
-            Destroy(item);
+            Destroy(item.gameObject);
         }
     }
 }

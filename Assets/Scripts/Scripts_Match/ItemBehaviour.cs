@@ -1,9 +1,13 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ItemBehaviour : MonoBehaviour
 {
     // Tracks if the item has been claimed by a player.
     private bool obtained = false;
+
+    // Keeps track of the action.
+    private System.Action<InputAction.CallbackContext> item_use_handler;
 
     void Start()
     {
@@ -22,13 +26,47 @@ public class ItemBehaviour : MonoBehaviour
     // Simulates the use of the item.
     public void use(string player)
     {
-        if (obtained && gameObject.transform.parent.name.Split("_")[0].Equals(player) && Time.timeScale != 0)
+        if
+        (
+            obtained &&
+            gameObject.transform.parent.name.Split("_")[0].Equals(player) &&
+            Time.timeScale != 0
+        )
         {
             // Frees the slot for another item.
             GameObject player_object = transform.root.gameObject;
             player_object.GetComponent<PlayerControls>().toggleHasItem();
+            PlayerInput player_input = player_object.GetComponent<PlayerInput>();
+            if (player_object.name.Equals("Player1"))
+            {
+                InputAction action = player_input.actions.FindActionMap("Player1Controls").FindAction("Item");
+                action.performed -= item_use_handler;
+            }
+            else
+            {
+                InputAction action = player_input.actions.FindActionMap("Player2Controls").FindAction("Item");
+                action.performed -= item_use_handler;
+            }
             Destroy(gameObject);
         }
+    }
+
+    // For special cases.
+    public void obtainedItemSelfDestroy()
+    {
+        GameObject player_object = transform.root.gameObject;
+        PlayerInput player_input = player_object.GetComponent<PlayerInput>();
+        if (player_object.name.Equals("Player1"))
+        {
+            InputAction action = player_input.actions.FindActionMap("Player1Controls").FindAction("Item");
+            action.performed -= item_use_handler;
+        }
+        else
+        {
+            InputAction action = player_input.actions.FindActionMap("Player2Controls").FindAction("Item");
+            action.performed -= item_use_handler;
+        }
+        Destroy(gameObject);
     }
 
     // Checks what collided.
@@ -60,6 +98,21 @@ public class ItemBehaviour : MonoBehaviour
             else
             {
                 player_controls.toggleHasItem();
+            }
+
+            // Makes item usable for the corresponding player, and saves the action to be later handled properly.
+            PlayerInput player_input = player_object.GetComponent<PlayerInput>();
+            if (player_object.name.Equals("Player1"))
+            {
+                InputAction action = player_input.actions.FindActionMap("Player1Controls").FindAction("Item");
+                item_use_handler = ctx => use("Player1");
+                action.performed += item_use_handler;
+            }
+            else
+            {
+                InputAction action = player_input.actions.FindActionMap("Player2Controls").FindAction("Item");
+                item_use_handler = ctx => use("Player2");
+                action.performed += item_use_handler;
             }
         }
     }

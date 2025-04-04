@@ -70,8 +70,7 @@ public class PlayerControls : MonoBehaviour
 
     public void replaceItem()
     {
-        Destroy(player_backpack.GetChild(0).gameObject);
-
+        player_backpack.GetChild(0).GetComponent<ItemBehaviour>().obtainedItemSelfDestroy();
     }
 
     // Getters and setters.
