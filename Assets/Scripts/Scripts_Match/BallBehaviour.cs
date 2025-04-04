@@ -117,26 +117,34 @@ public class BallBehaviour : MonoBehaviour
             }
         }
 
-        // Updates the score, resets every object's position and randomizes its own initial physics.
         if (collision.CompareTag("Goal"))
         {
             GameObject scoring_player = transform.position.x > 0 ? GameObject.Find("Player1") : GameObject.Find("Player2");
 
+            // Updates the score
             scoring_player.GetComponent<PlayerControls>().updateScore();
             match_handler.GetComponent<MatchHandler>().updateRemainingRounds();
 
+            // Randomizes its own initial physics.
             transform.position = new Vector3(0, 0, transform.position.z);
             x_speed = 5f;
             y_speed = 5f;
             x_direction = (Random.Range(0, 2) * 2) - 1;
             y_direction = (Random.Range(0, 2) * 2) - 1;
 
+            // Resets every object's position.
             GameObject player1 = GameObject.Find("Player1");
             GameObject player2 = GameObject.Find("Player2");
             player1.transform.position = new Vector3(player1.transform.position.x, 0, player1.transform.position.z);
             player2.transform.position = new Vector3(player2.transform.position.x, 0, player2.transform.position.z);
 
             last_hit = "";
+
+            // Resets unobtained items.
+            GameObject unobtained_items = GameObject.Find("UnobtainedItems");
+            ItemSpawner item_spawner_script = unobtained_items.GetComponent<ItemSpawner>();
+            item_spawner_script.goalCooldown();
+            item_spawner_script.lostItems();
 
             StartCoroutine(match_handler.GetComponent<MatchHandler>().matchCountdown());
         }

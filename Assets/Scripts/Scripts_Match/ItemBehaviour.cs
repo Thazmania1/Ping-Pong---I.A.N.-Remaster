@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ItemBehaviour : MonoBehaviour
 {
-    // Tracks if it's been claimed by a player.
+    // Tracks if the item has been claimed by a player.
     private bool obtained = false;
 
     void Start()
@@ -24,6 +24,9 @@ public class ItemBehaviour : MonoBehaviour
     {
         if (obtained && gameObject.transform.parent.name.Split("_")[0].Equals(player) && Time.timeScale != 0)
         {
+            // Frees the slot for another item.
+            GameObject player_object = transform.root.gameObject;
+            player_object.GetComponent<PlayerControls>().toggleHasItem();
             Destroy(gameObject);
         }
     }
@@ -34,16 +37,30 @@ public class ItemBehaviour : MonoBehaviour
         if (collision.gameObject.name == "Ball")
         {
             obtained = true;
-            transform.rotation = Quaternion.identity; // Resets rotation.
+
+            // Makes sure the ball doesn't get stuck behind the players.
+            Destroy(gameObject.GetComponent<Collider2D>());
+
+            // Resets rotation.
+            transform.rotation = Quaternion.identity;
 
             // Finds the backpack of the claiming player, and makes the item a child of it while mantaining proper scaling.
             GameObject player_backpack = GameObject.Find(collision.gameObject.GetComponent<BallBehaviour>().getLastHit() + "_Backpack");
             gameObject.transform.SetParent(player_backpack.transform, false);
             gameObject.transform.position = new Vector3(player_backpack.transform.position.x, player_backpack.transform.position.y, -1);
             gameObject.transform.localScale = new Vector3(1, 0.5f, 1);
-
-            // Makes sure the ball doesn't get stuck behind the players.
-            Destroy(gameObject.GetComponent<Collider2D>());
+            
+            // Gracefully handles item replacement.
+            GameObject player_object = transform.root.gameObject;
+            PlayerControls player_controls = player_object.GetComponent<PlayerControls>();
+            if (player_controls.getHasItem())
+            {
+                player_controls.replaceItem();
+            }
+            else
+            {
+                player_controls.toggleHasItem();
+            }
         }
     }
 }

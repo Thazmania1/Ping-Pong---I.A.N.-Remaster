@@ -79,7 +79,6 @@ public class MatchHandler : MonoBehaviour
         countdown_text.color = new Color32(255, 255, 255, 0); // Makes countdown invisible.
     }
 
-
     // Getters.
     public bool getPlayers_ai(int player)
     {

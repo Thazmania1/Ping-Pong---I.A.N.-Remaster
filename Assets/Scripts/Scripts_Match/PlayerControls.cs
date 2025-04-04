@@ -7,6 +7,9 @@ public class PlayerControls : MonoBehaviour
     // Declares a class level player physics variable.
     private Rigidbody2D player_physics;
 
+    // Reference to the player's backpack.
+    private Transform player_backpack;
+
     // Defines the player's speed.
     private float speed = 4f;
 
@@ -16,12 +19,16 @@ public class PlayerControls : MonoBehaviour
     // Determines the player's score.
     private int score = 0;
 
+    // Tracks if the player has an item.
+    private bool has_item = false;
+
     // Reference to the ball object.
     GameObject ball;
 
     void Start()
     {
         player_physics = GetComponent<Rigidbody2D>();
+        player_backpack = gameObject.transform.GetChild(0);
 
         // Each gets retrieves its respective role.
         GameObject match_handler = GameObject.Find("UI");
@@ -61,9 +68,25 @@ public class PlayerControls : MonoBehaviour
         gameObject.GetComponentInChildren<TextMeshPro>().text = score.ToString();
     }
 
-    // Getters.
+    public void replaceItem()
+    {
+        Destroy(player_backpack.GetChild(0).gameObject);
+
+    }
+
+    // Getters and setters.
     public int getScore()
     {
         return score;
+    }
+
+    public bool getHasItem()
+    {
+        return has_item;
+    }
+
+    public void toggleHasItem()
+    {
+        has_item = !has_item;
     }
 }
